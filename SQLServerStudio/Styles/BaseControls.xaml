@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--BASE STYLES-->
+    <!--This is style for all controls inheriting from control class (button, textbox, etc.)-->
+    <Style TargetType="{x:Type Control}" x:Key="BaseControlStyle">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamilyMain}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
+    </Style>
+
+    <!--Textblock does not inherit from control, own base style is needed-->
+    <Style TargetType="{x:Type TextBlock}" x:Key="BaseTextBlockStyle">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamilyMain}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
+    </Style>
+    
+</ResourceDictionary>

@@ -1,0 +1,202 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:SQLServerStudio">
+
+    <!--FILELIST CHECKBOX TEMPLATES-->
+    <!--Success icon template-->
+    <ControlTemplate x:Key="CheckBoxSuccesIcon" TargetType="{x:Type CheckBox}">
+        <Canvas Grid.Column="0" Width="26" Height="26" Background="Transparent">
+            <Path Canvas.Left="6" Canvas.Top="6"
+                  Stretch="Fill"
+                  Height="14" Width="14"
+                  StrokeDashArray="25"
+                  StrokeDashOffset="25"
+                  Stroke="Green"
+                  StrokeThickness="2"
+                  Data="M6.6235491,13.482284 L12.555481,17.919849 19.708455,8.2654572">
+                <Path.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="StrokeDashOffset"
+                                    To="0" 
+                                    Duration="0:0:1"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Path.Triggers>
+            </Path>
+        </Canvas>
+    </ControlTemplate>
+
+    <!--Error icon template-->
+    <ControlTemplate x:Key="CheckBoxErrorIcon" TargetType="{x:Type CheckBox}">
+        <Canvas Grid.Column="1" Width="26" Height="26" Background="Transparent">
+            <Path x:Name="bottomToTop" 
+                  Canvas.Left="6.945" Canvas.Top="6.96"
+                  Height="12" Width="12"
+                  Stroke="Red" 
+                  StrokeThickness="2"
+                  StrokeDashArray="18" 
+                  StrokeDashOffset="18"
+                  Data="M0.50000001,11.532126 L11.746138,0.50000001"/>
+            <Path x:Name="topToBottom" 
+                  Canvas.Left="6.915" Canvas.Top="6.897"
+                  Height="12" Width="12" 
+                  Stroke="Red" 
+                  StrokeThickness="2"
+                  StrokeDashArray="18" 
+                  StrokeDashOffset="18" 
+                  Data="M0.49999999,0.49999999 L11.668934,11.648232"/>
+            <Canvas.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="bottomToTop"
+                                Storyboard.TargetProperty="StrokeDashOffset"
+                                To="0" 
+                                Duration="0:0:0.5"/>
+                            <DoubleAnimation
+                                Storyboard.TargetName="topToBottom"
+                                Storyboard.TargetProperty="StrokeDashOffset"
+                                To="0" 
+                                Duration="0:0:0.5"
+                                BeginTime="0:0:0.5"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Canvas.Triggers>
+        </Canvas>
+    </ControlTemplate>
+
+
+    <!--Loading spinner template-->
+    <ControlTemplate x:Key="CheckBoxSpinner" TargetType="{x:Type CheckBox}">
+        <Canvas Width="26" Height="26" Background="Transparent">
+            <!-- Center and flip canvas vertically -->
+            <Canvas.RenderTransform >
+                <TransformGroup>
+                    <RotateTransform Angle="180" CenterX="13" CenterY="13"/>
+                </TransformGroup>
+            </Canvas.RenderTransform>
+            <!-- Outer borders -->
+            <Rectangle x:Name="outer" Canvas.Left="6" Canvas.Top="6"
+                       Width="14" Height="14"
+                       Stroke="{StaticResource PrimaryDarkBrush}" 
+                       StrokeThickness="1" 
+                       Fill="Transparent"
+                       RenderTransformOrigin="0.5, 0.5" >
+                <Rectangle.RenderTransform>
+                    <RotateTransform/>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <!-- Inner rectangle -->
+            <Rectangle x:Name="inner" Canvas.Left="7" Canvas.Top="7"
+                       Width="12" Height="12"
+                       Fill="{StaticResource PrimaryDarkBrush}"
+                       RenderTransformOrigin="0.5, 0.5" >
+                <Rectangle.RenderTransform>
+                    <RotateTransform/>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <!-- Canvas animation triggers -->
+            <Canvas.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <!-- Rotate outer border -->
+                            <DoubleAnimationUsingKeyFrames 
+                                    Storyboard.TargetName="outer" 
+                                    Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)" 
+                                    Duration="0:0:2" 
+                                    RepeatBehavior="Forever" >
+                                <LinearDoubleKeyFrame Value="0" KeyTime="80%" />
+                                <LinearDoubleKeyFrame Value="180" KeyTime="100%" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <!-- Rotate inner rectangle -->
+                            <DoubleAnimationUsingKeyFrames  
+                                    Storyboard.TargetName="inner" 
+                                    Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)"
+                                    Duration="0:0:2" 
+                                    RepeatBehavior="Forever">
+                                <LinearDoubleKeyFrame Value="0" KeyTime="80%" />
+                                <LinearDoubleKeyFrame Value="180" KeyTime="100%" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <!-- Hide inner rectangle by changing its hight to zero -->
+                            <DoubleAnimationUsingKeyFrames  
+                                    Storyboard.TargetName="inner" 
+                                    Storyboard.TargetProperty="Height" 
+                                    Duration="0:0:2" 
+                                    RepeatBehavior="Forever">
+                                <LinearDoubleKeyFrame Value="0" KeyTime="80%" />
+                                <LinearDoubleKeyFrame Value="0" KeyTime="100%" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Canvas.Triggers>
+        </Canvas>
+    </ControlTemplate>
+
+
+    <!--CHECKBOX STYLE-->
+    <Style x:Key="FileListCheckBox" TargetType="{x:Type CheckBox}">
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryDarkBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryDarkBrush}"/>
+        <Setter Property="Width" Value="26"/>
+        <Setter Property="Height" Value="26"/>
+        <Setter Property="Padding" Value="6"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <!--FontSize is calculated as Height - 2 * Padding-->
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid x:Name="templateRoot" 
+                              Background="Transparent" 
+                              SnapsToDevicePixels="True"  
+                              Width="{TemplateBinding Width}">
+                        <Border x:Name="checkBoxBorder" 
+                                    Background="Transparent" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Margin="{TemplateBinding Padding}">
+                            <Grid x:Name="markGrid">
+                                <TextBlock x:Name="optionMark" 
+                                           FontFamily="{StaticResource FontFamilyIcons}" 
+                                           FontSize="{TemplateBinding FontSize}"
+                                           FontWeight="Bold"
+                                           Text="{StaticResource SegoeCheckMarkIcon}" 
+                                           Background="Transparent" 
+                                           Foreground="{TemplateBinding Foreground}"
+                                           Opacity="0" 
+                                           VerticalAlignment="Center" 
+                                           HorizontalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="Opacity" TargetName="optionMark" Value="1"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--Add triggers for different checkbox styles-->
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ItemState}" Value="Execution">
+                <Setter Property="Template" Value="{StaticResource CheckBoxSpinner}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ItemState}" Value="DoneSuccess">
+                <Setter Property="Template" Value="{StaticResource CheckBoxSuccesIcon}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ItemState}" Value="DoneError">
+                <Setter Property="Template" Value="{StaticResource CheckBoxErrorIcon}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

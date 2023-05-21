@@ -1,0 +1,64 @@
+﻿<Window x:Class="SQLServerStudio.FolderDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SQLServerStudio"
+        mc:Ignorable="d"
+        Style="{StaticResource BaseWindowStyle}"
+        WindowStartupLocation="CenterOwner"
+        Title="SQL Server studio" 
+        Height="400" Width="300"
+        MinHeight="250" MinWidth="250">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <!--Dialog header text-->
+            <RowDefinition Height="Auto"/>
+            <!--Folder TreeView-->
+            <RowDefinition Height="*"/>
+            <!--Dialog buttons-->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--Dialog header text-->
+        <TextBlock Grid.Row="0" Margin="2" Text="Select folder:"/>
+
+        <!--Folder TreeView-->
+        <TreeView Grid.Row="1" 
+                  x:Name="FolderView" 
+                  BorderBrush="{StaticResource PrimaryLightBrush}"
+                  DataContext="{Binding DirectoryStructure}"
+                  ItemsSource="{Binding Items}">
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
+
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <Button Style="{StaticResource TreeViewItemContainer}"
+                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeView}}, Path=DataContext.SelectDirectoryItemCommand}"
+                            CommandParameter="{Binding .}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="20" Source="{
+                                        Binding ImageName,
+                                        Converter={x:Static local:ImageNameToImageConverter.Instance}}"/>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Path=DisplayName}"></TextBlock>
+                        </StackPanel>
+                    </Button>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+
+        <!--Dialog buttons-->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Style="{StaticResource DialogWindowButton}"
+                    Content="OK"
+                    Command="{Binding OkDialogCommand}"/>
+            <Button Style="{StaticResource DialogWindowButton}"
+                    Content="Cancel"
+                    Command="{Binding CancelDialogCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>

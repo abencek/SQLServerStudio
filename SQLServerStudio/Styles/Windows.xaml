@@ -1,0 +1,95 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:SQLServerStudio"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+
+    <!--Style for application window-->
+    <Style x:Key="BaseWindowStyle" TargetType="{x:Type Window}">
+        <Style.Resources>
+            <!--The size of resize borders around the window-->
+            <Thickness x:Key="ChromeRezizeBorderThickness">6</Thickness>
+            <!--The hight of caption/title bar of the window-->
+            <system:Double x:Key="ChromeCaptionHight">30</system:Double>
+        </Style.Resources>
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="Icon" Value="../Images/window-icon.ico"/>
+        <!--Setter for window chrome, which is outer non-client area of a window-->
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome ResizeBorderThickness="{StaticResource ChromeRezizeBorderThickness}"
+                              CaptionHeight="{StaticResource ChromeCaptionHight}"
+                              CornerRadius="0"
+                              GlassFrameThickness="0"/>
+            </Setter.Value>
+        </Setter>
+        <!--Template for inner client area of a window-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <!--Window outer border-->
+                    <Border Background="{StaticResource BackgroundWhiteBrush}"
+                            BorderBrush="{StaticResource PrimaryLightBrush}"
+                            BorderThickness="1,0,1,1"
+                            Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(WindowChrome.WindowChrome).ResizeBorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <!--Title bar-->
+                                <RowDefinition Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(WindowChrome.WindowChrome).CaptionHeight}"/>
+                                <!--Main window content-->
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            
+                            <!--Title bar-->
+                            <Grid Grid.Row="0" Background="{StaticResource PrimaryDarkBrush}">
+                                <Grid.ColumnDefinitions>
+                                    <!--Application icon-->
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!--Window caption-->
+                                    <ColumnDefinition Width="*"/>
+                                    <!--Min, Max, Close buttons-->
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <!--Application icon-->
+                                <Image Grid.Column="0" 
+                                       Source="../Images/window-icon.png"
+                                       Width="{Binding Source={x:Static SystemParameters.SmallIconWidth}}"
+                                       Margin="6,0,5,0"
+                                       VerticalAlignment="Center" 
+                                       />
+                                <!--Window caption-->
+                                <TextBlock Grid.Column="1" 
+                                           Foreground="{StaticResource ForegroundLightBrush}"
+                                           Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}"
+                                           VerticalAlignment="Center" 
+                                           HorizontalAlignment="Left"/>
+                                <!--Min, Max, Close buttons-->
+                                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                    <Button Content="{StaticResource SegoeWindowChromeMinIcon}"
+                                            Style="{StaticResource WindowChromeResizeButton}"
+                                            Command="{x:Static local:WindowChromeCommands.MinimizeCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+                                    <Button Content="{StaticResource SegoeWindowChromeMaxIcon}" 
+                                            Style="{StaticResource WindowChromeResizeButton}"
+                                            Command="{x:Static local:WindowChromeCommands.MaximizeCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+                                    <Button Content="{StaticResource SegoeWindowChromeCloseIcon}" 
+                                            Style="{StaticResource WindowChromeCloseButton}"
+                                            Command="{x:Static local:WindowChromeCommands.CloseCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!--Main window content-->
+                            <Grid Grid.Row="1" Margin="4">
+                                <ContentPresenter Content="{TemplateBinding Content}"/>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

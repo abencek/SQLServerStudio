@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="SQLServerStudio.SettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SQLServerStudio"
+             mc:Ignorable="d" 
+             Height="180" 
+             d:DesignHeight="180" d:DesignWidth="600">
+    <StackPanel Orientation="Vertical" 
+                Background="{StaticResource BackgroundWhiteBrush}"
+                d:DataContext="{x:Static local:SettingsDesignModel.Instance}">
+        <!--Text inputs-->
+        <Grid Margin="10,0,0,0">
+            <Grid.RowDefinitions>
+                <!--Input field for server name-->
+                <RowDefinition Height="60"/>
+                <!--Input field for folder name-->
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <!--Input label-->
+                <ColumnDefinition Width="Auto"/>
+                <!--Input texbox-->
+                <ColumnDefinition Width="*"/>
+                <!--"More" option link-->
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Input field for server name-->
+            <Label Grid.Row="0"
+                   Grid.Column="0" 
+                   Style="{StaticResource InputTextBoxLabel}"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Right"                 
+                   Target="{Binding ElementName=serverName}">Server name:</Label>
+            <TextBox Grid.Row="0"
+                     Grid.Column="1" 
+                     Name="serverName" 
+                     Style="{StaticResource InputTextBox}"
+                     IsReadOnly="True"
+                     VerticalAlignment="Bottom"
+                     Text="{Binding ServerName}"/>
+            <Button Grid.Row="0"
+                    Grid.Column="2"
+                    Style="{StaticResource MoreActionLink}"                                 
+                    Command="{Binding OpenServerNameDialogCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+
+            <!--Input field for folder name-->
+            <Label Grid.Row="1"
+                   Grid.Column="0" 
+                   Style="{StaticResource InputTextBoxLabel}"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Right"                 
+                   Target="{Binding ElementName=folderName}">Files location:</Label>
+            <TextBox Grid.Row="1"
+                     Grid.Column="1"
+                     Name="folderName" 
+                     Style="{StaticResource InputTextBox}"
+                     IsReadOnly="True"
+                     VerticalAlignment="Bottom"
+                     Text="{Binding ScriptsLocation}"/>
+            <Button Grid.Row="1"
+                    Grid.Column="2"
+                    Style="{StaticResource MoreActionLink}"                                 
+                    Command="{Binding OpenFolderDialogCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+        </Grid>
+
+        <!--Run scripts button-->
+        <Button Style="{StaticResource ExecuteScriptsButton}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,10,0,0"
+                Content="EXECUTE SELECTED FILES"
+                Command="{Binding ExecuteScriptsCommand}"/>
+    </StackPanel>
+</UserControl>

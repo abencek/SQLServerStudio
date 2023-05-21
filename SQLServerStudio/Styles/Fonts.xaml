@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--Font families-->
+    <FontFamily x:Key="FontFamilyMain">Calibri</FontFamily>
+    <FontFamily x:Key="FontFamilyIcons">Segoe MDL2 Assets</FontFamily>
+
+    <!--Font sizes-->
+    <system:Double x:Key="FontSizeSmall">12</system:Double>
+    <system:Double x:Key="FontSizeRegular">14</system:Double>
+    <system:Double x:Key="FontSizeLarge">16</system:Double>
+
+    <!--ICONS-->
+    <!--Icons for Segoe Font Family-->
+    <system:String x:Key="SegoeCheckMarkIcon">&#xE73E;</system:String>
+    <system:String x:Key="SegoeMoreIcon">&#xE712;</system:String>
+    <system:String x:Key="SegoeWindowChromeMinIcon">&#xE921;</system:String>
+    <system:String x:Key="SegoeWindowChromeMaxIcon">&#xE922;</system:String>
+    <system:String x:Key="SegoeWindowChromeCloseIcon">&#xE8BB;</system:String>
+
+</ResourceDictionary>

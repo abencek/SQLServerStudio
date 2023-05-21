@@ -1,0 +1,49 @@
+﻿<Window x:Class="SQLServerStudio.ServerNameDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SQLServerStudio"
+        mc:Ignorable="d"
+        Style="{StaticResource BaseWindowStyle}"
+        WindowStartupLocation="CenterOwner"
+        Title="SQL Server studio" 
+        MinHeight="160" MinWidth="350"
+        SizeToContent="WidthAndHeight">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <!--Input text field-->
+            <RowDefinition Height="*"/>
+            <!--Dialog buttons-->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--Input text field-->
+        <Grid Grid.Row="0" Margin="0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0"
+                   Style="{StaticResource InputTextBoxLabel}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"                 
+                   Target="{Binding ElementName=serverName}">Server name:</Label>
+            <TextBox Grid.Column="1"
+                     Name="serverName" 
+                     Style="{StaticResource InputTextBox}"
+                     VerticalAlignment="Center"
+                     Text="{Binding ServerName}"/>
+        </Grid>
+
+        <!--Dialog buttons-->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Style="{StaticResource DialogWindowButton}"
+                    Content="OK"
+                    Command="{Binding OkDialogCommand}"/>
+            <Button Style="{StaticResource DialogWindowButton}"
+                    Content="Cancel"
+                    Command="{Binding CancelDialogCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>
