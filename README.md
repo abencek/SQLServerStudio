@@ -17,4 +17,5 @@
 
 ## Demo
 
+https://github.com/abencek/SQLServerStudio/assets/91414028/28dbff38-5880-4e47-9f46-624090f98659
 
